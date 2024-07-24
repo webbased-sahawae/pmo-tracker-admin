@@ -60,4 +60,39 @@ export default class pmoAPI {
       throw error;
     }
   }
+
+  static async getRegisteredUsers(search, page) {
+    try {
+      const result = await useFetch(
+        useRuntimeConfig().public.BASE_URL + "/user",
+        {
+          headers: {
+            access_token: useICookie.get("access_token"),
+            UserLevelId: useRuntimeConfig().public.SYSTEM_PRIVILEGE,
+          },
+          query: { search, page },
+        }
+      );
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getUserLevel(UserId) {
+    try {
+      const result = await useFetch(
+        useRuntimeConfig().public.BASE_URL + "/user/level/" + UserId,
+        {
+          headers: {
+            access_token: useICookie.get("access_token"),
+            UserLevelId: useRuntimeConfig().public.SYSTEM_PRIVILEGE,
+          },
+        }
+      );
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

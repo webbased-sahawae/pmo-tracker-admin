@@ -36,11 +36,41 @@
       class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
       @click="
         () => {
+          navigateTo('/tracker/user');
+        }
+      "
+    >
+      User
+    </div>
+    <div
+      class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+      @click="
+        () => {
+          navigateTo('/tracker/user');
+        }
+      "
+    >
+      Department
+    </div>
+    <div
+      class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+      @click="
+        () => {
           navigateTo('/tracker/assignment');
         }
       "
     >
       Assignment
+    </div>
+    <div
+      class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+      @click="
+        () => {
+          navigateTo('/tracker/project/management');
+        }
+      "
+    >
+      Project
     </div>
   </div>
 </template>
