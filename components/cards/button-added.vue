@@ -13,5 +13,4 @@ const { FieldId, field } = defineProps(["FieldId", "field"]);
 const { data: partner, status } = await useFetch(
   `${BASE_URL}/${field}/${FieldId}`
 );
-console.log(`${BASE_URL}/${field}/${FieldId}`);
 </script>

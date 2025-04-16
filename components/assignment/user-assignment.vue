@@ -1,18 +1,18 @@
 <template>
   <div>
     <ul>
-      <li v-for="(level, index) in dataLevel" :key="index">
+      <li v-for="(assignment, index) in assignments" :key="assignment.id">
         <div class="flex items-center">
           <icons-cross
             width="15"
             class="text-pred cursor-pointer font-black"
             @click="
               () => {
-                deleteLevel(level.id);
+                deleteAssignment(assignment.id);
               }
             "
           />
-          {{ level.UserLevel.name }}
+          {{ assignment.Partner.name }}
         </div>
       </li>
     </ul>
@@ -23,21 +23,26 @@ import pmoAPI from "../composables/rest-api";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
-const dataLevel = ref([]);
-const { UserId, onDelete } = defineProps(["UserId", "onDelete"]);
-
-const { data } = await pmoAPI.getUserLevel(UserId);
-dataLevel.value = data.value;
-const deleteLevel = async (levelId) => {
+// const isRefresh = ref(false);
+const assignments = ref([]);
+const props = defineProps(["UserId", "isRefresh"]);
+const refreshData = async () => {
+  const { data } = await pmoAPI.getAssignmentByUserId(props.UserId);
+  assignments.value = data.value;
+};
+await refreshData();
+const deleteAssignment = async (AssignmentId) => {
   try {
     const {
       data: dataDeleted,
       error,
       status,
-    } = await pmoAPI.deleteUserLevel(levelId);
+    } = await pmoAPI.deleteAssignment(AssignmentId);
     if (status.value == "error") throw error.value;
-    const { data: dataAfterDelete } = await pmoAPI.getUserLevel(UserId);
-    dataLevel.value = dataAfterDelete.value;
+    const { data: dataAfterDelete } = await pmoAPI.getAssignmentByUserId(
+      props.UserId
+    );
+    assignments.value = dataAfterDelete.value;
     toast.add({
       severity: "info",
       summary: 200,
@@ -53,4 +58,10 @@ const deleteLevel = async (levelId) => {
     });
   }
 };
+watch(
+  () => props.isRefresh,
+  async () => {
+    await refreshData();
+  }
+);
 </script>

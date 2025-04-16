@@ -159,20 +159,21 @@ const submitProject = async () => {
       project.value.project.end &&
       project.value.project.CategoryId
     ) {
-      const { data: responseData, error } = await useFetch(
-        `${BASE_URL}/project`,
-        {
-          method: "post",
-          body: project.value,
-          watch: false,
-          headers: {
-            access_token: useICookie.get("access_token"),
-            UserLevelId: SYSTEM_PRIVILEGE,
-          },
-        }
-      );
+      const {
+        data: responseData,
+        error,
+        status,
+      } = await useFetch(`${BASE_URL}/project`, {
+        method: "post",
+        body: project.value,
+        watch: false,
+        headers: {
+          access_token: useICookie.get("access_token"),
+          UserLevelId: SYSTEM_PRIVILEGE,
+        },
+      });
 
-      if (error.value) throw error.value;
+      if (status.value == "error") throw error.value;
       toastMessage(
         "success",
         200,

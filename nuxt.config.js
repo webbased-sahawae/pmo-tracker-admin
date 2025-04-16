@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     },
   },
   primevue: {
-    components: { prefix: "Prime", include: ["Toast", "Button"] },
+    components: { prefix: "Prime", include: ["Toast", "Button", "Dropdown"] },
   },
   runtimeConfig: {
     public: {

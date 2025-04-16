@@ -26,10 +26,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     if (to.name != "login" && useICookie.get("access_token")) {
       try {
         // console.log("global");
-        const { data, error } = await pmoAPI.getWithAccess("/user/google");
+        const { data, error, status } = await pmoAPI.getWithAccess(
+          "/user/google"
+        );
         // console.log(useICookie.get("access_token"));
         // console.log(data);
-        if (error.value) throw error.value;
+        if (status.value == "error") throw error.value;
       } catch (error) {
         console.log("global error");
         console.log(error);

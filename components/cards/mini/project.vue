@@ -39,17 +39,7 @@
         </div>
         <div class="text-sm">{{ dates() }}</div>
       </div>
-      <div>
-        Latest activity:
-        <div class="text-sm italic text-stop">
-          {{
-            Math.ceil(
-              (new Date() - new Date("02/27/2024")) / (1000 * 60 * 60 * 24)
-            )
-          }}
-          days ago
-        </div>
-      </div>
+
       <div class="h-full">
         <div class="flex font-bold">
           <img src="~/assets/icons/sinergy.png" width="15" /> Sinergy:

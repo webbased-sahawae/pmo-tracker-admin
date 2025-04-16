@@ -34,7 +34,7 @@
         />
       </div>
       <div class="primeBox w-full h-full">
-        <div class="font-bold px-2">Program tambahan</div>
+        <div class="font-bold px-2">Project Non-Program</div>
         <div class="flex flex-col justify-start gap-2 p-2">
           <!-- {{ data.ProjectsNonProgram }} -->
           <div class="flex flex-wrap gap-2">

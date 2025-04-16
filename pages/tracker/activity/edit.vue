@@ -242,7 +242,7 @@ const createActivity = async () => {
         UserLevelId: SYSTEM_PRIVILEGE,
       },
     });
-    if (error.value) throw error.value;
+    if (status.value == "error") throw error.value;
     toastMessage(
       "success",
       200,

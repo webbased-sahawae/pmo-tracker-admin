@@ -11,7 +11,7 @@
       </div>
     </div>
     <div
-      class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+      class="text-wrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
       @click="
         () => {
           navigateTo('/tracker/general-report');
@@ -21,7 +21,7 @@
       General Report
     </div>
     <div
-      class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+      class="text-wrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
       @click="
         () => {
           navigateTo(
@@ -33,7 +33,7 @@
       Report Bidang / Badan
     </div>
     <div
-      class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+      class="text-wrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
       @click="
         () => {
           navigateTo('/tracker/user');
@@ -43,17 +43,7 @@
       User
     </div>
     <div
-      class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
-      @click="
-        () => {
-          navigateTo('/tracker/user');
-        }
-      "
-    >
-      Department
-    </div>
-    <div
-      class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+      class="text-wrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
       @click="
         () => {
           navigateTo('/tracker/assignment');
@@ -62,15 +52,44 @@
     >
       Assignment
     </div>
-    <div
-      class="text-nowrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+    <!-- <div
+      class="text-wrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
       @click="
         () => {
-          navigateTo('/tracker/project/management');
+          navigateTo('/tracker/user');
         }
       "
     >
-      Project
+      Department
+    </div> -->
+    <div>
+      <div
+        class="mt-4 text-wrap text-secondary border-y-dprimary duration-1000 border-y-2 px-4 border-t-2 border-t-white pt-2 font-bold underline"
+      >
+        Project and Activity
+      </div>
+      <div class="px-4">
+        <div
+          class="text-wrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+          @click="
+            () => {
+              navigateTo('/tracker/project/management/category');
+            }
+          "
+        >
+          Categories
+        </div>
+        <div
+          class="text-wrap text-secondary cursor-pointer border-y-dprimary hover:text-primary hover:border-y-[#FFF] duration-1000 border-y-2 px-4"
+          @click="
+            () => {
+              navigateTo('/tracker/project/management');
+            }
+          "
+        >
+          Impacts
+        </div>
+      </div>
     </div>
   </div>
 </template>

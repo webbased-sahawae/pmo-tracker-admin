@@ -238,7 +238,6 @@ const { activity } = useActivity();
 const createActivity = async () => {
   try {
     const data = { ...trace.value, ...activity.value };
-    console.log(data);
     const {
       data: responseData,
       status,
@@ -260,7 +259,7 @@ const createActivity = async () => {
     await navigateTo({
       path: "/tracker/project/" + trace.value.ProjectId,
     });
-    if (error.value) throw error.value;
+    if (status.value == "error") throw error.value;
   } catch (error) {
     toastMessage("error", error.statusCode, error.statusMessage);
   }

@@ -281,7 +281,6 @@ institutionActive.value.programPercentage = rawRecap.value;
 recapStatus.value.status = rawRecapStatus.value;
 watch(institutionActive.value, async () => {
   try {
-    console.log(institutionActive.value);
     recapStatus.value.status = "pending";
 
     const { data: dataSinergy } = await useFetch(

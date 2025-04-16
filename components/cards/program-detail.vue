@@ -88,11 +88,8 @@ const { data: Projects } = await useFetch(
 
 const deleteProgram = async (ProgramId) => {
   try {
-    console.log("clicked");
     await useFetch(`${BASE_URL}/program/${ProgramId}`, { method: "DELETE" });
     reloadNuxtApp({ ttl: 0 });
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 </script>

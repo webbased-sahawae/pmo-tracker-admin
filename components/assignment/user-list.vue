@@ -1,7 +1,6 @@
 <template>
   <div class="border-4 border-dsecondary p-2 rounded-2xl bg-white shadow-md">
-    <h2 class="text-lg font-semibold text-left mb-4">Registered Users</h2>
-    {{ page }}
+    <h2 class="text-lg font-semibold text-left mb-4">PMO Assignment</h2>
     <div class="">
       <div v-if="data.totalPages > 20">
         Page:
@@ -64,9 +63,8 @@
             <th class="py-2 px-4 border-b border-gray-300 text-left">No</th>
             <th class="py-2 px-4 border-b border-gray-300 text-left">Name</th>
             <th class="py-2 px-4 border-b border-gray-300 text-left">Email</th>
-            <th class="py-2 px-4 border-b border-gray-300 text-left">Levels</th>
             <th class="py-2 px-4 border-b border-gray-300 text-left">
-              Actions
+              Assignment
             </th>
           </tr>
         </thead>
@@ -78,17 +76,12 @@
             <td class="py-2 px-4 border-b border-gray-300">{{ user.name }}</td>
             <td class="py-2 px-4 border-b border-gray-300">{{ user.email }}</td>
             <td class="py-2 px-4 border-b border-gray-300">
-              <user-level :UserId="user.id" :key="`userLevel${user.id}`" />
+              <assignment-user-assignment
+                :UserId="user.id"
+                :key="`userLevel${user.id}`"
+                :isRefresh="isRefresh"
+              />
               <!-- as/s -->
-            </td>
-            <td class="py-2 px-4 border-b border-gray-300">
-              <button
-                @click="deleteUser(user.id)"
-                class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700 transition-colors duration-200 flex items-center"
-              >
-                <icons-delete-user />
-                User
-              </button>
             </td>
           </tr>
         </tbody>
@@ -100,55 +93,30 @@
 <script setup>
 import pmoAPI from "../composables/rest-api";
 import { useToast } from "primevue/usetoast";
+
 const toast = useToast();
 
 const search = ref("");
 const page = ref(1);
 const data = ref({});
 const loading = ref(false);
+const isRefresh = ref(false);
 
-const refreshList = async () => {
+const refreshData = async () => {
+  console.log("REFRESHING DATA");
+
+  isRefresh.value = true;
   const { data: dataAPI } = await pmoAPI.getRegisteredUsers(
     search.value,
     page.value
   );
   data.value = dataAPI.value;
+  isRefresh.value = false;
 };
 defineExpose({
-  refreshList,
+  refreshData,
 });
-await refreshList();
-const deleteUser = async (userId) => {
-  try {
-    const {
-      data: dataDeleted,
-      error,
-      status,
-    } = await pmoAPI.deleteUserById(userId);
-    if (status.value == "error") throw error.value;
-
-    const { data: dataAPIAfterUserDelete } = await pmoAPI.getRegisteredUsers(
-      search.value,
-      page.value
-    );
-    data.value = dataAPIAfterUserDelete.value;
-
-    toast.add({
-      severity: "info",
-      summary: 200,
-      detail: dataDeleted.value,
-      life: 10000,
-    });
-  } catch (error) {
-    toast.add({
-      severity: "error",
-      summary: error.statusCode,
-      detail: error.data.message,
-      life: 10000,
-    });
-  }
-};
-
+await refreshData();
 watch([page, search], async () => {
   try {
     const { data: dataAPI } = await pmoAPI.getRegisteredUsers(

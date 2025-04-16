@@ -1,2 +1,3 @@
-export const SYSTEM_NAME = "SRI";
-export const SYSTEM_DESCRIPTION = "System Report and Information";
+export const SYSTEM_NAME = "KADIN SCOPE";
+export const SYSTEM_DESCRIPTION =
+  "Strategic Commerce Operations Performance Evaluator";

@@ -6,42 +6,29 @@
       class="text-lg font-semibold text-left mb-4 cursor-pointer"
       @click="toggleForm"
     >
-      Add New User
+      Assign PMO
     </h2>
     <transition name="slide-fade">
       <div v-if="showForm">
         <div class="mb-4">
-          <input
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-dsecondary"
-            placeholder="Email"
-            id="email"
-            type="email"
-            :value="email"
-            @keydown="removeSpaces"
-            @input="updateEmail"
-          />
+          <AssignmentSearchUser :assignedUser="setSelectedUser" />
         </div>
         <div class="mb-4">
-          <select
-            v-model="selectedCategory"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-dsecondary"
-          >
-            <option disabled value="">Select Category</option>
-            <option
-              v-for="userLevel in userLevelList"
-              :key="userLevel.id"
-              :value="userLevel.id"
-            >
-              {{ userLevel.name }}
-            </option>
-          </select>
+          <AssignmentSearchPartner :assignedPartner="setSelectedPartner" />
         </div>
-        <div class="text-center">
+        <div
+          class="text-center"
+          v-if="
+            (selectedUser.name || selectedUser.email) && selectedPartner.name
+          "
+        >
           <button
-            @click="addUser"
+            @click="createUserAssignment"
             class="px-4 py-2 bg-dsecondary text-white rounded-lg hover:bg-dsecondary-dark transition-colors duration-200"
           >
-            Add User
+            Assign
+            {{ selectedUser.name ? selectedUser.name : selectedUser.email }} to
+            {{ selectedPartner.name }}
           </button>
         </div>
       </div>
@@ -54,14 +41,18 @@ import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
 import pmoAPI from "../composables/rest-api";
 const emit = defineEmits(["refreshTable"]);
-const email = ref("");
-const selectedCategory = ref("");
+
+const selectedUser = ref({});
+const selectedPartner = ref({});
 const toast = useToast();
 const showForm = ref(false);
 
-const userLevelList = await pmoAPI.getUserLevelList();
+const setSelectedUser = (value) => (selectedUser.value = value);
+const setSelectedPartner = (value) => (selectedPartner.value = value);
 
 const toggleForm = () => {
+  selectedPartner.value = {};
+  selectedUser.value = {};
   showForm.value = !showForm.value;
 };
 
@@ -74,45 +65,29 @@ const toastMessage = (severity, code, message) => {
   });
 };
 
-const removeSpaces = (e) => {
-  if (e.key === " ") {
-    e.preventDefault();
-  }
-};
-
-const updateEmail = (e) => {
-  email.value = e.target.value.toLowerCase();
-};
-
-const validateEmail = (email) => {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-};
-
-const addUser = async () => {
-  if (email.value && selectedCategory.value) {
-    if (!validateEmail(email.value)) {
-      toastMessage("error", 500, `Error: Please enter a valid email address`);
-      return;
-    }
+const createUserAssignment = async () => {
+  if (selectedUser.value && selectedPartner.value) {
     try {
       const {
-        data: createUser,
-        error: errorCreateUser,
-        status: createUserStatus,
-      } = await pmoAPI.createUserAndLevel(email.value, selectedCategory.value);
-      if (createUserStatus.value == "error") throw errorCreateUser.value;
+        data: resultAddAssignment,
+        status,
+        error,
+      } = await pmoAPI.createUserAssignment(
+        selectedUser.value.id,
+        selectedPartner.value.id
+      );
+      if (status.value == "error") throw error.value;
 
+      console.log(resultAddAssignment);
       toast.add({
         severity: "success",
         summary: 200,
-        detail: createUser.value,
+        detail: resultAddAssignment.value,
         life: 10000,
       });
       emit("refreshTable");
-      email.value = "";
-      selectedCategory.value = "";
     } catch (error) {
+      console.log(error);
       toast.add({
         severity: "error",
         summary: error.statusCode,

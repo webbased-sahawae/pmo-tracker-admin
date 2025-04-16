@@ -362,11 +362,14 @@ const projectStatus = () => {
 
 const deleteProject = async () => {
   try {
-    const { error } = await useFetch(`${BASE_URL}/project/${ProjectId}`, {
-      method: "delete",
-      watch: false,
-    });
-    if (error.value) throw error.value;
+    const { error, status } = await useFetch(
+      `${BASE_URL}/project/${ProjectId}`,
+      {
+        method: "delete",
+        watch: false,
+      }
+    );
+    if (status.value == "error") throw error.value;
 
     toastMessage("info", "Delete", "Project has been deleted!");
     await navigateTo(`/tracker/assignment?PartnerId=${trace.value.PartnerId}`);
