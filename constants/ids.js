@@ -1,3 +1,3 @@
-export const SYSTEM_NAME = "KADIN SCOPE";
+export const SYSTEM_NAME = "KADIN BIZMAP";
 export const SYSTEM_DESCRIPTION =
-  "Strategic Commerce Operations Performance Evaluator";
+  "Business Information and Zone Monitoring & Analysis Platform";
